@@ -1,0 +1,22 @@
+{
+    "name": "default-demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "assets/js/index.js",
+    "build": {
+        "appId": "com.yourcompany.yourapp",
+        "productName": "Your App Name",
+        "icon": "assets/image/app-icon.png"
+    },
+    "scripts": {
+        "start": "electron .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "electron": "^39.2.7"
+    }
+}
