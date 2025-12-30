@@ -1,22 +1,65 @@
 {
     "name": "default-demo",
     "version": "1.0.0",
-    "description": "",
-    "main": "assets/js/index.js",
-    "build": {
-        "appId": "com.yourcompany.yourapp",
-        "productName": "Your App Name",
-        "icon": "assets/image/app-icon.png"
-    },
+    "description": "My Electron Application",
+    "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder",
+        "build:win": "electron-builder --win",
+        "build:win-portable": "electron-builder --win portable",
+        "build:win-nsis": "electron-builder --win nsis",
+        "build:mac": "electron-builder --mac",
+        "build:linux": "electron-builder --linux",
+        "build:all": "electron-builder -wml"
     },
-    "keywords": [],
-    "author": "",
+    "author": "Your Name",
     "license": "ISC",
     "type": "commonjs",
     "devDependencies": {
-        "electron": "^39.2.7"
+        "electron": "^39.2.7",
+        "electron-builder": "^26.0.12"
+    },
+    "build": {
+        "appId": "com.yourcompany.defaultdemo",
+        "productName": "Default Demo",
+        "directories": {
+            "output": "dist"
+        },
+        "files": [
+            "**/*",
+            "!node_modules/**/*",
+            "!**/*.log",
+            "!**/*.map",
+            "!src/",
+            "!test/",
+            "!docs/"
+        ],
+        "win": {
+            "target": [
+                "nsis",
+                "portable"
+            ],
+            "icon": "assets/image/app-icon.png"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "Default Demo"
+        },
+        "mac": {
+            "target": "dmg",
+            "icon": "assets/image/app-icon.png"
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ],
+            "icon": "assets/image/app-icon.png"
+        }
     }
 }
