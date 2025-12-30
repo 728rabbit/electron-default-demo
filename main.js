@@ -1,91 +1,61 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
-const path = require('path');
+const { app, ipcMain } = require('electron');
+const AppViewer = new (require('./viewer.js'))();
+const gotSingleInstanceLock = app.requestSingleInstanceLock();
 
-let splash, mainWindow, childWindow;
-
-function createSplash() {
-    splash = new BrowserWindow({
-        width: 300,
-        height: 240,
-        frame: false,
-        transparent: true,
-        alwaysOnTop: true,
-    });
-    splash.loadFile(path.join(__dirname, 'view/splash.html'));
-}
-
-function createMainWindow() {
-    mainWindow = new BrowserWindow({
-        modal: true,
-        width: 1024,
-        height: 768,
-        icon: path.join(__dirname, 'assets/image/app-icon.png'),
-        webPreferences: {   
-            contextIsolation: true,
-            nodeIntegration: false,
-            preload: path.join(__dirname, 'preload.js')  
+if (!gotSingleInstanceLock) {
+    console.log('Another instance is running, quitting...');
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        console.log('Second instance attempted to run');
+        if (AppViewer.mainWindow) {
+            if (AppViewer.mainWindow.isMinimized()) {
+                AppViewer.mainWindow.restore();
+            }
+            AppViewer.mainWindow.focus();
         }
     });
 
-    mainWindow.loadFile('view/index.html');
-
-    mainWindow.once('ready-to-show', () => {
-        if (splash) { splash.close(); }
-        mainWindow.show()
+    if (process.platform === 'win32') {
+        app.setAppUserModelId(app.getName());
+    }
+    app.setName(app.getName()); 
+    
+    app.whenReady().then(() => {
+        AppViewer.createSplash();
+        setTimeout(() => {
+            AppViewer.createMainWindow();
+        }, 1000);
     });
 
-    createAppMenu();
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') {
+            app.quit();
+        }
+    });
 
-    mainWindow.on('closed', () => (mainWindow = null));
+    app.on('activate', () => {
+        if (!AppViewer.mainWindow || AppViewer.mainWindow.isDestroyed()) {
+            AppViewer.createMainWindow();
+        } else {
+            AppViewer.mainWindow.focus();
+        }
+    });
+    app.on('before-quit', () => {
+        console.log('Application is quitting...');
+    });
 }
 
-function createChildWindow(view = null) {
-    if(view && mainWindow) {
-        childWindow = new BrowserWindow({
-            parent: mainWindow,
-            modal: true,
-            width: 800,
-            height: 600,
-            icon: path.join(__dirname, 'assets/image/app-icon.png'),
-            webPreferences: {   
-                contextIsolation: true,
-                nodeIntegration: false,
-                preload: path.join(__dirname, 'preload.js')  
-            }
-        });
-        
-        childWindow.loadFile(path.join(__dirname, 'view/'+view+'.html'));
-
-        childWindow.setMenu(null);
-
-        childWindow.on('closed', () => (childWindow = null));
-    }
-}
-
-function createAppMenu() {
-    const template = [
-    {
-        label: 'File',
-        submenu: [
-        { type: 'separator' },
-        {
-            label: 'Quit',
-            click: () => {
-                app.quit();
-            }
-        }]
-    }];
-
-    const menu = Menu.buildFromTemplate(template);
-    
-    mainWindow.setMenu(null);
-}
-
-app.whenReady().then(() => {
-    createSplash();
-    setTimeout(() => createMainWindow(), 2000);
+// Listen for events
+// 1. Event triggered: ipcRenderer.send(...)
+// 2. Listener receives: ipcMain.on(...)
+// 3. Callback function executed
+ipcMain.on('open-child-window', (event, viewName) => {
+    console.log('Event: open-child-window');
+    AppViewer.createChildWindow(viewName);
 });
 
-ipcMain.on('open-child-window', (event, viewName) => {
-    createChildWindow(viewName);
+ipcMain.on('show-notification-message', (event, object) => {
+    console.log('Event: show-notification-message');
+    AppViewer.showNotification(object.title, object.body);
 });
