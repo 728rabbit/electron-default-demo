@@ -56,3 +56,7 @@ npm install electron-builder --save-dev
         }
       }
     }
+
+# 打包
+** 使用admin user ** 
+npm run build:win
