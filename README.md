@@ -4,12 +4,10 @@ electron application development structure
 
 # 安裝 electron-builder
 
-
-# 進入你的項目目錄
+進入你的項目目錄
 cd your-project-directory
 
-
-# 安裝 electron-builder 為開發依賴
+安裝 electron-builder 為開發依賴
 npm install electron-builder --save-dev
 
 # 配置 package.json
