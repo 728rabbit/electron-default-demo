@@ -1,5 +1,5 @@
 {
-    "name": "default-demo",
+    "name": "Default Demo",
     "version": "1.0.0",
     "description": "My Electron Application",
     "main": "main.js",
