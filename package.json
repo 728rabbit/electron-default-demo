@@ -1,7 +1,7 @@
 {
-    "name": "iweby-accounting-system",
+    "name": "iweby-accounting",
     "version": "1.0.0",
-    "description": "iWeby accounting system is your efficient and intelligent financial partner. From quoting and issuing invoices to receiving and verifying payments, it connects the entire transaction process in one stop, allowing you to clearly track the flow of every penny and easily manage income and expenses.",
+    "description": "iWeby accounting is your efficient and intelligent financial partner. From quoting and issuing invoices to receiving and verifying payments, it connects the entire transaction process in one stop, allowing you to clearly track the flow of every penny and easily manage income and expenses.",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
@@ -26,7 +26,7 @@
     },
     "build": {
         "appId": "app.iweby.accounting",
-        "productName": "iWeby Accounting System",
+        "productName": "iWeby Accounting",
         "directories": {
             "output": "dist"
         },
@@ -50,8 +50,7 @@
             "oneClick": false,
             "allowToChangeInstallationDirectory": true,
             "createDesktopShortcut": true,
-            "createStartMenuShortcut": true,
-            "shortcutName": "Default Demo"
+            "createStartMenuShortcut": true
         },
         "mac": {
             "target": "dmg",
