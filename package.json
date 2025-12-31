@@ -1,10 +1,11 @@
 {
-    "name": "Default Demo",
+    "name": "iWeby Accounting System",
     "version": "1.0.0",
-    "description": "My Electron Application",
+    "description": "iWeby accounting system is your efficient and intelligent financial partner. From quoting and issuing invoices to receiving and verifying payments, it connects the entire transaction process in one stop, allowing you to clearly track the flow of every penny and easily manage income and expenses.",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
+        "start:hot": "nodemon --watch main.js --exec electron .",
         "pack": "electron-builder --dir",
         "dist": "electron-builder",
         "build:win": "electron-builder --win",
@@ -14,16 +15,18 @@
         "build:linux": "electron-builder --linux",
         "build:all": "electron-builder -wml"
     },
-    "author": "Your Name",
+    "author": "Nil",
     "license": "ISC",
     "type": "commonjs",
     "devDependencies": {
         "electron": "^39.2.7",
-        "electron-builder": "^26.0.12"
+        "electron-builder": "^26.0.12",
+        "electron-reload": "^2.0.0-alpha.1",
+        "nodemon": "^3.1.11"
     },
     "build": {
-        "appId": "com.yourcompany.defaultdemo",
-        "productName": "Default Demo",
+        "appId": "app.iweby.accounting",
+        "productName": "iWeby Accounting System",
         "directories": {
             "output": "dist"
         },
@@ -41,7 +44,7 @@
                 "nsis",
                 "portable"
             ],
-            "icon": "assets/image/app-icon.png"
+            "icon": "assets/image/iweby-logo.png"
         },
         "nsis": {
             "oneClick": false,
@@ -52,14 +55,14 @@
         },
         "mac": {
             "target": "dmg",
-            "icon": "assets/image/app-icon.png"
+            "icon": "assets/image/iweby-logo.png"
         },
         "linux": {
             "target": [
                 "AppImage",
                 "deb"
             ],
-            "icon": "assets/image/app-icon.png"
+            "icon": "assets/image/iweby-logo.png"
         }
     }
 }

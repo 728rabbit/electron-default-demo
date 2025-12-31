@@ -1,16 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-hant" class="small-font">
     <head>
-        <title>Electron Demo</title>
+        <title>iWeby Accounting System</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../assets/image/app-icon.png" rel="icon" type="image/png">
-        <link href="../assets/css/iweb.core.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/image/iweby-logo.png" rel="icon" type="image/png">
+        <link href="../assets/base/icons/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/base/iweby.kit.css" rel="stylesheet" type="text/css"/>
+        <link href="../assets/css/common.css" rel="stylesheet" type="text/css"/>
+        <script src="../assets/base/iweby.kit.js"></script>
+        <script src="../assets/js/common.js"></script>
+        <script>const iweb = (new iwebyKit()).init();</script>
     </head>
     <body>
-        <div>
-            <h1>Hello, Electron!</h1>
-            <button onclick="window.electronAPI.openChildWindow('about');">Show Child Window</button>
-        </div>
+        <header class="page-header">
+            <div>
+                <div class="menu">
+                    <a href="#">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <span>Menu 目錄</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-tachometer" aria-hidden="true"></i>
+                                <span>Dashboard 儀表板</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                <span>Clients 客戶</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                <span>Quotes 報價單</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                                <span>Invoices 發票</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                                <span>Income 收入</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                <span>Expenses 支出</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span>Preset Items 預設項目</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <span>Settings 設定</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="welcome">
+                    Hi 您好, Admin
+                </div>
+                <div class="clearboth"></div>
+            </div>
+        </header>
+        <main class="page-body">
+
+        </main>
     </body>
 </html>

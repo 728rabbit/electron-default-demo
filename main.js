@@ -2,10 +2,13 @@ const { app, ipcMain } = require('electron');
 const AppViewer = new (require('./viewer.js'))();
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 
+require('electron-reload')(__dirname);
+
 if (!gotSingleInstanceLock) {
     console.log('Another instance is running, quitting...');
     app.quit();
-} else {
+} 
+else {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         console.log('Second instance attempted to run');
         if (AppViewer.mainWindow) {
@@ -20,12 +23,12 @@ if (!gotSingleInstanceLock) {
         app.setAppUserModelId(app.getName());
     }
     app.setName(app.getName()); 
-    
+
     app.whenReady().then(() => {
         AppViewer.createSplash();
         setTimeout(() => {
             AppViewer.createMainWindow();
-        }, 1000);
+        }, 2000);
     });
 
     app.on('window-all-closed', () => {

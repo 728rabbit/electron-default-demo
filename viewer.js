@@ -16,7 +16,7 @@ class AppViewer {
         }
 
         this.splash = new BrowserWindow({
-            width: 300,
+            width: 240,
             height: 240,
             frame: false,
             transparent: true,
@@ -54,10 +54,10 @@ class AppViewer {
         }
 
         this.mainWindow = new BrowserWindow({
-            width: 1024,
-            height: 768,
+            width: 1280,
+            height: 800,
             show: false,
-            icon: path.join(__dirname, 'assets/image/app-icon.png'),
+            icon: path.join(__dirname, 'assets/image/iweby-logo.png'),
             webPreferences: {   
                 contextIsolation: true,
                 nodeIntegration: false,
@@ -86,7 +86,7 @@ class AppViewer {
             this.mainWindow.focus();
 
             // debug mode
-            // this.mainWindow.webContents.openDevTools({ mode: 'detach' });
+            this.mainWindow.webContents.openDevTools({ mode: 'detach' });
         });
 
         this.mainWindow.on('closed', () => {
@@ -117,7 +117,7 @@ class AppViewer {
             width: 800,
             height: 600,
             show: false,
-            icon: path.join(__dirname, 'assets/image/app-icon.png'),
+            icon: path.join(__dirname, 'assets/image/iweby-logo.png'),
             webPreferences: {   
                 contextIsolation: true,
                 nodeIntegration: false,
@@ -193,7 +193,7 @@ class AppViewer {
             this.activeNotification = new Notification({ 
                 title: name, 
                 body: content,
-                icon: path.join(__dirname, 'assets/image/app-icon.png')
+                icon: path.join(__dirname, 'assets/image/iweby-logo.png')
             }).show();
         } 
         else {
