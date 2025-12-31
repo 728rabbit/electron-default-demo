@@ -1,5 +1,5 @@
 {
-    "name": "iWeby Accounting System",
+    "name": "iweby-accounting-system",
     "version": "1.0.0",
     "description": "iWeby accounting system is your efficient and intelligent financial partner. From quoting and issuing invoices to receiving and verifying payments, it connects the entire transaction process in one stop, allowing you to clearly track the flow of every penny and easily manage income and expenses.",
     "main": "main.js",
