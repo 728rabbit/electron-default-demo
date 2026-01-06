@@ -79,7 +79,8 @@
             </div>
         </header>
         <main class="page-body">
-
+            <button onclick="window.electronAPI.startEvent('open-child-window', 'about')">Show child window</button>
+            <button onclick="window.electronAPI.startEvent('show-notification-message', {title: '測試', body: '你好世界！'})">Show notification</button>
         </main>
     </body>
 </html>

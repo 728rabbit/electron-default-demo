@@ -53,12 +53,12 @@ else {
 // 1. Event triggered: ipcRenderer.send(...)
 // 2. Listener receives: ipcMain.on(...)
 // 3. Callback function executed
-ipcMain.on('open-child-window', (event, viewName) => {
+ipcMain.on('open-child-window', (event, args) => {
     console.log('Event: open-child-window');
-    AppViewer.createChildWindow(viewName);
+    AppViewer.createChildWindow(args);
 });
 
-ipcMain.on('show-notification-message', (event, object) => {
+ipcMain.on('show-notification-message', (event, args) => {
     console.log('Event: show-notification-message');
-    AppViewer.showNotification(object.title, object.body);
+    AppViewer.showNotification(args);
 });

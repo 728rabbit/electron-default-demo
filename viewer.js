@@ -86,7 +86,7 @@ class AppViewer {
             this.mainWindow.focus();
 
             // debug mode
-            this.mainWindow.webContents.openDevTools({ mode: 'detach' });
+            //this.mainWindow.webContents.openDevTools({ mode: 'detach' });
         });
 
         this.mainWindow.on('closed', () => {
@@ -168,31 +168,13 @@ class AppViewer {
         this.mainWindow.setMenu(null);
     }
 
-    showNotification (name, content) {
-        if (!name || !content) { return };
+    showNotification (args) {
+        if (!args.title || !args.body) { return };
         
         if (Notification.isSupported()) {
-            if (this.activeNotification) {
-                try
-                {
-                    if (this.activeNotification.close) {
-                        this.activeNotification.close();
-                    } 
-                    else if (this.activeNotification.destroy) {
-                        this.activeNotification.destroy();
-                    }
-                } 
-                catch (error) {
-                    console.warn('An error occurred while turning off notifications:', error);
-                } 
-                finally {
-                    this.activeNotification = null;
-                }
-            }
-
             this.activeNotification = new Notification({ 
-                title: name, 
-                body: content,
+                title: args.title, 
+                body: args.body,
                 icon: path.join(__dirname, 'assets/image/iweby-logo.png')
             }).show();
         } 
