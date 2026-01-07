@@ -19,6 +19,7 @@
     "license": "ISC",
     "type": "commonjs",
     "devDependencies": {
+        "@electron/rebuild": "^4.0.2",
         "electron": "^39.2.7",
         "electron-builder": "^26.0.12",
         "electron-reload": "^2.0.0-alpha.1",
@@ -63,5 +64,8 @@
             ],
             "icon": "assets/image/iweby-logo.png"
         }
+    },
+    "dependencies": {
+        "better-sqlite3": "^12.5.0"
     }
 }

@@ -1,5 +1,6 @@
 const { app, ipcMain } = require('electron');
 const AppViewer = new (require('./viewer.js'))();
+const sqliteDB = new (require('./database.js'))();
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 
 require('electron-reload')(__dirname);
@@ -25,6 +26,8 @@ else {
     app.setName(app.getName()); 
 
     app.whenReady().then(() => {
+        sqliteDB.init();
+
         AppViewer.createSplash();
         setTimeout(() => {
             AppViewer.createMainWindow();
@@ -50,8 +53,8 @@ else {
 }
 
 // Listen for events
-// 1. Event triggered: ipcRenderer.send(...)
-// 2. Listener receives: ipcMain.on(...)
+// 1. Event triggered: ipcRenderer.send(channel, ...args)  or ipcRenderer.invoke(channel, ...args)
+// 2. Listener receives: ipcMain.on(event, ...args)
 // 3. Callback function executed
 ipcMain.on('open-child-window', (event, args) => {
     console.log('Event: open-child-window');
