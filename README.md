@@ -60,3 +60,85 @@ npm install electron-builder --save-dev
 # 打包
 ** 使用admin user ** 
 npm run build:win
+
+
+# preload 内使用ipcRenderer， main 内使用 ipcMain
+
+## 详细流程
+
+### 1. **Preload 脚本（使用 `ipcRenderer`）**
+
+javascript
+
+    // preload.js
+    const { contextBridge, ipcRenderer } = require('electron')
+    
+    // 暴露安全的 API 给渲染进程
+    contextBridge.exposeInMainWorld('electronAPI', {
+      // 使用 ipcRenderer.invoke 调用主进程方法
+      getData: () => ipcRenderer.invoke('get-data'),
+      
+      // 使用 ipcRenderer.send 发送消息
+      sendMessage: (message) => ipcRenderer.send('send-message', message),
+      
+      // 监听主进程消息
+      onUpdate: (callback) => 
+        ipcRenderer.on('data-updated', (event, data) => callback(data)),
+      
+      // 移除监听器
+      removeListener: () => ipcRenderer.removeAllListeners('data-updated')
+    })
+
+### 2. **Main 进程（使用 `ipcMain`）**
+
+javascript
+
+    // main.js
+    const { app, BrowserWindow, ipcMain } = require('electron')
+    
+    // 处理来自渲染进程的请求
+    ipcMain.handle('get-data', async (event) => {
+      // 这里可以访问 Node.js API
+      const fs = require('fs')
+      const data = fs.readFileSync('data.json', 'utf-8')
+      return JSON.parse(data)
+    })
+    
+    // 监听消息
+    ipcMain.on('send-message', (event, message) => {
+      console.log('收到消息:', message)
+      // 可以回复
+      event.reply('message-received', { status: 'ok' })
+    })
+    
+    // 主动发送消息给渲染进程
+    function sendDataToRenderer(data) {
+      const win = BrowserWindow.getFocusedWindow()
+      if (win) {
+        win.webContents.send('data-updated', data)
+      }
+    }
+
+### 3. **渲染进程使用暴露的 API**
+
+javascript
+
+    // renderer.js (在网页中执行)
+    
+    // 使用预加载脚本暴露的 API
+    window.electronAPI.getData()
+      .then(data => {
+        console.log('获取的数据:', data)
+      })
+    
+    // 发送消息
+    window.electronAPI.sendMessage('Hello from renderer!')
+    
+    // 监听更新
+    window.electronAPI.onUpdate((data) => {
+      console.log('数据更新:', data)
+    })
+
+
+
+
