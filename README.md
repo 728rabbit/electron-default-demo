@@ -61,9 +61,6 @@ npm install electron-builder --save-dev
 ** 使用admin user ** 
 npm run build:win
 
-
-# preload 内使用ipcRenderer， main 内使用 ipcMain
-
 ## 详细流程
 
 ### 1. **Preload 脚本（使用 `ipcRenderer`）**
@@ -140,5 +137,27 @@ javascript
     })
 
 
-
-
+## 完整通信流向
+    ┌───────────────────────────────────────┐
+    │           View Layer                  │
+    │     (HTML/CSS/JavaScript UI)          │
+    │                                       │
+    │   → 调用 window.api.xxx()             │
+    │   ← 接收 window.api.onXXX() 回调       │
+    └───────────────────────────────────────┘
+                        ↓
+    ┌───────────────────────────────────────┐
+    │           Preload Script              │
+    │  (桥梁，有 Node.js 权限)               │
+    │                                       │
+    │   → 使用 ipcRenderer 转发请求          │
+    │   ← 接收 ipcMain 响应并转发给 View      │
+    └───────────────────────────────────────┘
+                        ↓
+    ┌───────────────────────────────────────┐
+    │            Main Process               │
+    │  (核心进程，完整的 Node.js 权限)        │
+    │                                       │
+    │   ← 通过 ipcMain.on/handle 接收请求     │
+    │   → 通过 event.reply/sender.send 响应   │
+    └───────────────────────────────────────┘
